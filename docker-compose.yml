@@ -63,15 +63,14 @@ services:
   # namespace; this is what makes `docker compose up` exercise the same code
   # paths without an Azure subscription.
   servicebus:
-    image: mcr.microsoft.com/azure-messaging/servicebus-emulator:latest
+    build:
+      context: ./infra/servicebus-emulator
     environment:
       ACCEPT_EULA: "Y"
       MSSQL_SA_PASSWORD: "BunkerFlow!Local1"
       SQL_SERVER: servicebus-db
     ports:
       - "5672:5672"
-    volumes:
-      - ./infra/servicebus-emulator/config.json:/ServiceBus_Emulator/ConfigFiles/Config.json:ro
     depends_on:
       servicebus-db:
         condition: service_healthy
@@ -106,6 +105,9 @@ services:
       Kafka__BootstrapServers: "redpanda:9092"
       BatchSources__0__Endpoint: "http://api:8080/mock-sources/trading-desk/trades?count=25"
       BatchSources__1__Endpoint: "http://api:8080/mock-sources/erp/trades?count=25"
+    ports:
+      # The worker's own health and metrics endpoints.
+      - "8081:8080"
     volumes:
       - landing-data:/app/data
     depends_on:

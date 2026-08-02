@@ -97,16 +97,37 @@ simulated ERP endpoint, then prints the landed events and the metrics.
 
 ```bash
 docker compose up --build
+./scripts/seed-kafka.sh     # puts four trades on the Kafka topic
 ```
 
 Brings up PostgreSQL, Redpanda for the Kafka path, Microsoft's Service Bus
-emulator, the API and the worker.
+emulator, the API and the worker. The batch workers start polling the simulated
+sources immediately; the seed script exercises the streaming path.
 
 ```bash
-curl localhost:8080/health/ready
-curl "localhost:8080/events?limit=5"
-curl localhost:8080/metrics
+curl localhost:8080/health/ready              # landed count
+curl "localhost:8080/events?limit=5"          # what landed
+curl localhost:8081/metrics                   # worker counters, by channel
 ```
+
+The worker exposes its own health and metrics on port 8081. It does most of the
+ingesting, so its counters are the ones worth scraping; the API's port 8080
+counters cover only what was pushed to `/ingest`.
+
+A run from a clean volume looks like this:
+
+```
+bunkerflow_records_total{outcome="accepted",channel="batch"} 46
+bunkerflow_records_total{outcome="accepted",channel="stream"} 3
+bunkerflow_records_total{outcome="duplicate",channel="batch"} 24
+bunkerflow_records_total{outcome="rejected",channel="batch"} 3
+bunkerflow_records_total{outcome="rejected",channel="stream"} 1
+```
+
+The duplicates are the batch pullers re-polling sources that return overlapping
+data. The rejections are records whose IMO check digit does not compute; the
+simulated ERP feed emits one every seventh record on purpose so the dead-letter
+path is visible rather than theoretical.
 
 ### Tests
 
@@ -153,6 +174,13 @@ healthy pod during a database blip. `/health/ready` is the one that checks.
 
 **Validation reports every failure, not the first.** A source system fixing one
 field at a time and resubmitting is a slow loop for everyone involved.
+
+**A failed publish does not commit the Kafka offset.** If the record could not
+be handed to the bus, the consumer seeks back rather than committing, so the
+broker redelivers it once the infrastructure recovers. Committing regardless
+would lose the trade during exactly the outage you built the retry for. This
+turned up while running the stack: the Service Bus emulator was still starting,
+one streamed record failed to publish, and its offset had already moved on.
 
 ## Scope, honestly
 

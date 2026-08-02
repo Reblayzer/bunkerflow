@@ -17,13 +17,12 @@ RUN dotnet publish src/BunkerFlow.Api/BunkerFlow.Api.csproj -c Release -o /app -
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
 WORKDIR /app
 
-# Never run as root.
-RUN adduser --disabled-password --gecos "" --uid 10001 bunkerflow \
-    && mkdir -p /app/data \
-    && chown -R bunkerflow:bunkerflow /app
-USER bunkerflow
+COPY --from=build /app ./
 
-COPY --from=build --chown=bunkerflow:bunkerflow /app ./
+# The .NET images already ship a non-root user; APP_UID is its id. Only the
+# landing directory needs to be writable by it.
+RUN mkdir -p /app/data && chown -R $APP_UID:$APP_UID /app
+USER $APP_UID
 
 ENV ASPNETCORE_HTTP_PORTS=8080
 EXPOSE 8080

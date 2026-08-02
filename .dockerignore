@@ -1,0 +1,17 @@
+# Build output must never be copied into the image: it would overwrite the
+# restore the build stage just did.
+**/bin/
+**/obj/
+**/TestResults/
+
+.git/
+.github/
+.vs/
+.idea/
+
+data/
+infra/terraform/.terraform/
+tests/
+scripts/
+*.md
+docker-compose.yml

@@ -15,6 +15,9 @@ namespace BunkerFlow.Worker.Ingestion;
 /// </summary>
 public sealed class KafkaIngestionWorker : BackgroundService
 {
+    /// <summary>How long to wait before retrying after a recoverable broker error.</summary>
+    private static readonly TimeSpan RecoverableErrorDelay = TimeSpan.FromSeconds(5);
+
     private readonly KafkaOptions _options;
     private readonly IngestionPipeline _pipeline;
     private readonly ILogger<KafkaIngestionWorker> _logger;
@@ -55,6 +58,7 @@ public sealed class KafkaIngestionWorker : BackgroundService
             AutoOffsetReset = AutoOffsetReset.Earliest,
             EnableAutoCommit = false,
             EnablePartitionEof = false,
+            AllowAutoCreateTopics = true,
         };
 
         using var consumer = new ConsumerBuilder<string, string>(config)
@@ -73,13 +77,46 @@ public sealed class KafkaIngestionWorker : BackgroundService
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                var message = consumer.Consume(stoppingToken);
+                ConsumeResult<string, string>? message;
+                try
+                {
+                    message = consumer.Consume(stoppingToken);
+                }
+                catch (ConsumeException exception) when (!exception.Error.IsFatal)
+                {
+                    // The usual case is the topic not existing yet because the
+                    // producer has not started. That is a normal startup race,
+                    // not a reason to take the worker process down.
+                    _logger.LogWarning(
+                        "Kafka consume failed ({Reason}); retrying in {Delay}s",
+                        exception.Error.Reason,
+                        RecoverableErrorDelay.TotalSeconds);
+
+                    await Task.Delay(RecoverableErrorDelay, stoppingToken);
+                    continue;
+                }
+
                 if (message?.Message is null)
                 {
                     continue;
                 }
 
-                await HandleAsync(message.Message.Value, stoppingToken);
+                var outcome = await HandleAsync(message.Message.Value, stoppingToken);
+
+                if (outcome == IngestionOutcome.Failed)
+                {
+                    // The record never reached the bus. Leaving the offset
+                    // uncommitted and seeking back means the broker hands it to
+                    // us again once the infrastructure recovers, instead of the
+                    // trade disappearing with the outage.
+                    _logger.LogWarning(
+                        "Not committing offset {Offset}: the record could not be published",
+                        message.TopicPartitionOffset);
+
+                    consumer.Seek(message.TopicPartitionOffset);
+                    await Task.Delay(RecoverableErrorDelay, stoppingToken);
+                    continue;
+                }
 
                 // Committing after handling means a crash replays the message
                 // rather than losing it. The dedupe store absorbs the replay.
@@ -96,7 +133,11 @@ public sealed class KafkaIngestionWorker : BackgroundService
         }
     }
 
-    private async Task HandleAsync(string payload, CancellationToken stoppingToken)
+    /// <returns>
+    /// The pipeline's outcome, or null when the message was not a record at all
+    /// and there is nothing to retry.
+    /// </returns>
+    private async Task<IngestionOutcome?> HandleAsync(string payload, CancellationToken stoppingToken)
     {
         Dictionary<string, string?>? fields;
         try
@@ -109,7 +150,7 @@ public sealed class KafkaIngestionWorker : BackgroundService
             // Unparseable bytes cannot be dead-lettered as a SourceRecord, since
             // there is no record to speak of. Log and move on.
             _logger.LogError(exception, "Discarding a Kafka message that is not JSON");
-            return;
+            return null;
         }
 
         if (fields is null
@@ -118,7 +159,7 @@ public sealed class KafkaIngestionWorker : BackgroundService
         {
             _logger.LogWarning(
                 "Discarding a Kafka message without '{Field}'", _options.RecordIdField);
-            return;
+            return null;
         }
 
         var record = new SourceRecord
@@ -129,6 +170,7 @@ public sealed class KafkaIngestionWorker : BackgroundService
             Fields = fields,
         };
 
-        await _pipeline.ProcessAsync(record, stoppingToken);
+        var result = await _pipeline.ProcessAsync(record, stoppingToken);
+        return result.Outcome;
     }
 }
