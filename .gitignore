@@ -1,0 +1,11 @@
+bin/
+obj/
+.vs/
+*.user
+.env
+data/
+TestResults/
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl

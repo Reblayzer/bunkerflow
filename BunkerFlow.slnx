@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/BunkerFlow.Api/BunkerFlow.Api.csproj" />
+    <Project Path="src/BunkerFlow.Contracts/BunkerFlow.Contracts.csproj" />
+    <Project Path="src/BunkerFlow.Integration/BunkerFlow.Integration.csproj" />
+    <Project Path="src/BunkerFlow.Worker/BunkerFlow.Worker.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/BunkerFlow.Integration.Tests/BunkerFlow.Integration.Tests.csproj" />
+  </Folder>
+</Solution>
