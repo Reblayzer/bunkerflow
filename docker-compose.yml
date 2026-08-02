@@ -1,0 +1,123 @@
+# The whole gateway on one machine: two brokers, a database, the API and the
+# worker.
+#
+#   docker compose up --build
+#
+# Then:
+#   curl localhost:8080/health/ready
+#   curl localhost:8080/metrics
+#   curl "localhost:8080/events?limit=5"
+name: bunkerflow
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: bunkerflow
+      POSTGRES_PASSWORD: bunkerflow
+      POSTGRES_DB: bunkerflow
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bunkerflow -d bunkerflow"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # Kafka API compatible broker. Lighter than a full Kafka plus ZooKeeper pair
+  # and speaks the same protocol, so Confluent.Kafka needs no changes.
+  redpanda:
+    image: redpandadata/redpanda:v24.3.6
+    command:
+      - redpanda
+      - start
+      - --smp=1
+      - --overprovisioned
+      - --node-id=0
+      - --check=false
+      - --kafka-addr=INTERNAL://0.0.0.0:9092,EXTERNAL://0.0.0.0:19092
+      - --advertise-kafka-addr=INTERNAL://redpanda:9092,EXTERNAL://localhost:19092
+    ports:
+      - "19092:19092"
+    healthcheck:
+      test: ["CMD-SHELL", "rpk cluster health | grep -q 'Healthy:.*true'"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  # Backing store the Service Bus emulator requires.
+  servicebus-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "BunkerFlow!Local1"
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"BunkerFlow!Local1\" -C -Q 'SELECT 1'"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+  # Microsoft's local Service Bus emulator. Terraform provisions the real
+  # namespace; this is what makes `docker compose up` exercise the same code
+  # paths without an Azure subscription.
+  servicebus:
+    image: mcr.microsoft.com/azure-messaging/servicebus-emulator:latest
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "BunkerFlow!Local1"
+      SQL_SERVER: servicebus-db
+    ports:
+      - "5672:5672"
+    volumes:
+      - ./infra/servicebus-emulator/config.json:/ServiceBus_Emulator/ConfigFiles/Config.json:ro
+    depends_on:
+      servicebus-db:
+        condition: service_healthy
+
+  api:
+    build:
+      context: .
+      dockerfile: src/BunkerFlow.Api/Dockerfile
+    environment:
+      ConnectionStrings__Postgres: "Host=postgres;Database=bunkerflow;Username=bunkerflow;Password=bunkerflow"
+      ServiceBus__ConnectionString: "Endpoint=sb://servicebus;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=SAS_KEY_VALUE;UseDevelopmentEmulator=true;"
+      Landing__ParquetRootPath: "/app/data/landing"
+    ports:
+      - "8080:8080"
+    volumes:
+      - landing-data:/app/data
+    depends_on:
+      postgres:
+        condition: service_healthy
+      servicebus:
+        condition: service_started
+
+  worker:
+    build:
+      context: .
+      dockerfile: src/BunkerFlow.Worker/Dockerfile
+    environment:
+      ConnectionStrings__Postgres: "Host=postgres;Database=bunkerflow;Username=bunkerflow;Password=bunkerflow"
+      ServiceBus__ConnectionString: "Endpoint=sb://servicebus;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=SAS_KEY_VALUE;UseDevelopmentEmulator=true;"
+      Landing__ParquetRootPath: "/app/data/landing"
+      Kafka__Enabled: "true"
+      Kafka__BootstrapServers: "redpanda:9092"
+      BatchSources__0__Endpoint: "http://api:8080/mock-sources/trading-desk/trades?count=25"
+      BatchSources__1__Endpoint: "http://api:8080/mock-sources/erp/trades?count=25"
+    volumes:
+      - landing-data:/app/data
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redpanda:
+        condition: service_healthy
+      servicebus:
+        condition: service_started
+      api:
+        condition: service_started
+
+volumes:
+  postgres-data:
+  landing-data:
