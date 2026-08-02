@@ -73,6 +73,7 @@ a few field aliases, not a new code path.
 | Dead-lettering | A dedicated queue for records rejected before publication, and the subscription's own DLQ for ones that fail after delivery |
 | Landing | Postgres for querying, Parquet partitioned by trade date for the lakehouse |
 | API | `POST /ingest`, `POST /ingest/batch`, `GET /events`, `GET /health/live`, `GET /health/ready`, `GET /metrics`, OpenAPI |
+| Auth | API key on the ingest and query endpoints, compared in constant time, with a key list so rotation does not break callers |
 | Observability | Structured logs and Prometheus counters broken out by outcome and ingestion channel |
 | Infrastructure | Terraform for the namespace, topic, subscription, subscription rule, dead-letter queue and send-only auth rules |
 | CI | Build, test, `terraform fmt`/`validate`, and both container images |
@@ -106,9 +107,15 @@ sources immediately; the seed script exercises the streaming path.
 
 ```bash
 curl localhost:8080/health/ready              # landed count
-curl "localhost:8080/events?limit=5"          # what landed
 curl localhost:8081/metrics                   # worker counters, by channel
+curl -H "X-Api-Key: local-dev-key" "localhost:8080/events?limit=5"
 ```
+
+`/ingest` and `/events` require an API key; health and metrics stay open so
+probes and Prometheus can reach them. The compose stack sets an obvious
+throwaway key so the authenticated path is actually exercised. With no keys
+configured the endpoints are open, which is what the quickstart above relies
+on, and the API logs a warning saying so at startup.
 
 The worker exposes its own health and metrics on port 8081. It does most of the
 ingesting, so its counters are the ones worth scraping; the API's port 8080
@@ -132,11 +139,19 @@ path is visible rather than theoretical.
 ### Tests
 
 ```bash
-./scripts/test.sh
+./scripts/test.sh          # fast suite, no containers
+./scripts/test-broker.sh   # against a real Redpanda container, needs Docker
 ```
 
-61 xUnit tests: the normalizer, the validators, the retry policy, the dedupe
-store, the pipeline's outcome paths, and the API driven end to end in-process.
+The fast suite covers the normalizer, the validators, the retry policy, the
+dedupe store, the pipeline's outcome paths, the Parquet round-trip, API key
+enforcement, and the API driven end to end in-process.
+
+The broker suite starts a real Redpanda through Testcontainers and drives the
+Kafka consumer against it, because the offset rules cannot be proved with a
+fake: a record that failed to publish must leave its offset uncommitted and be
+redelivered, while one rejected on data quality must be committed and
+dead-lettered. CI runs it as its own job.
 
 ### Infrastructure
 
@@ -182,6 +197,10 @@ would lose the trade during exactly the outage you built the retry for. This
 turned up while running the stack: the Service Bus emulator was still starting,
 one streamed record failed to publish, and its offset had already moved on.
 
+A rejected record is the opposite case and is committed, because resending the
+same bad data would only fail again; it goes to the dead-letter queue instead.
+Both rules are pinned by `KafkaOffsetCommitTests` against a real broker.
+
 ## Scope, honestly
 
 - **The source systems are simulated.** `/mock-sources/*` generates trade data
@@ -191,9 +210,12 @@ one streamed record failed to publish, and its offset had already moved on.
   the format those platforms read, but nothing here has been deployed to either.
 - **Terraform is validated, not applied.** The configuration is real and CI
   checks it; provisioning it needs an Azure subscription.
-- **Authentication is a send-only SAS connection string.** Moving both hosts to
-  a managed identity is the next hardening step, and `local_auth_enabled` is
-  already a variable for it.
+- **API authentication is a shared key, not per-caller identity.** It is enough
+  to keep the gateway from being open to anyone who can reach it, but it does
+  not tell two source systems apart. OAuth or mTLS is the real answer.
+- **Service Bus authentication is a send-only SAS connection string.** Moving
+  both hosts to a managed identity is the next hardening step, and
+  `local_auth_enabled` is already a variable for it.
 - No horizontal scaling, no multi-region, no schema registry.
 
 ## Repository layout

@@ -1,3 +1,4 @@
+using BunkerFlow.Api.Security;
 using BunkerFlow.Integration.Landing;
 
 namespace BunkerFlow.Api.Endpoints;
@@ -10,7 +11,8 @@ public static class EventEndpoints
         routes.MapGet("/events", QueryAsync)
             .WithTags("Events")
             .WithName("QueryEvents")
-            .WithSummary("Query landed events. Always paginated.");
+            .WithSummary("Query landed events. Always paginated.")
+            .AddEndpointFilter<ApiKeyEndpointFilter>();
     }
 
     private static async Task<IResult> QueryAsync(

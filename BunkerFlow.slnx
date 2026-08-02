@@ -6,6 +6,7 @@
     <Project Path="src/BunkerFlow.Worker/BunkerFlow.Worker.csproj" />
   </Folder>
   <Folder Name="/tests/">
+    <Project Path="tests/BunkerFlow.Broker.Tests/BunkerFlow.Broker.Tests.csproj" />
     <Project Path="tests/BunkerFlow.Integration.Tests/BunkerFlow.Integration.Tests.csproj" />
   </Folder>
 </Solution>

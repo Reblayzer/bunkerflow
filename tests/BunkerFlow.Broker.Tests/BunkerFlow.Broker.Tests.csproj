@@ -1,0 +1,28 @@
+<!--
+  Broker-backed tests. They start a real Redpanda container through
+  Testcontainers, so they need a Docker daemon and are slower than the unit
+  suite. CI runs them as their own job.
+-->
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.4" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="Testcontainers.Redpanda" Version="4.13.0" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\BunkerFlow.Worker\BunkerFlow.Worker.csproj" />
+  </ItemGroup>
+
+</Project>

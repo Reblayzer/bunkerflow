@@ -1,3 +1,4 @@
+using BunkerFlow.Api.Security;
 using BunkerFlow.Contracts;
 using BunkerFlow.Integration.Pipeline;
 
@@ -14,7 +15,9 @@ public static class IngestEndpoints
 
     public static void MapIngestEndpoints(this IEndpointRouteBuilder routes)
     {
-        var group = routes.MapGroup("/ingest").WithTags("Ingestion");
+        var group = routes.MapGroup("/ingest")
+            .WithTags("Ingestion")
+            .AddEndpointFilter<ApiKeyEndpointFilter>();
 
         group.MapPost("/", IngestOneAsync)
             .WithName("IngestRecord")

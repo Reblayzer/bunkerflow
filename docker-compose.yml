@@ -83,6 +83,9 @@ services:
       ConnectionStrings__Postgres: "Host=postgres;Database=bunkerflow;Username=bunkerflow;Password=bunkerflow"
       ServiceBus__ConnectionString: "Endpoint=sb://servicebus;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=SAS_KEY_VALUE;UseDevelopmentEmulator=true;"
       Landing__ParquetRootPath: "/app/data/landing"
+      # Obviously not a secret. It is here so the compose stack exercises the
+      # authenticated path rather than leaving the filter dormant.
+      Api__Keys__0: "local-dev-key"
     ports:
       - "8080:8080"
     volumes:
