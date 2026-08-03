@@ -136,6 +136,19 @@ data. The rejections are records whose IMO check digit does not compute; the
 simulated ERP feed emits one every seventh record on purpose so the dead-letter
 path is visible rather than theoretical.
 
+### On Databricks
+
+`notebooks/bunkerflow_lakehouse.py` takes the gateway's Parquet output and
+builds Delta tables from it: bronze as landed, silver with standardized column
+names and deduplication on event id, gold aggregated by port and fuel grade.
+
+It reads `samples/landing/`, which is real output from a compose run committed
+to this repo: 50 events, 47 from the batch pullers and 3 from the Kafka topic.
+So it runs on a fresh [Databricks Free Edition](https://login.databricks.com/?intent=CE_SIGN_UP)
+workspace with no cloud subscription and no setup beyond signing in.
+
+Import it with **Workspace → Import → File**, then Run all.
+
 ### Tests
 
 ```bash
@@ -205,9 +218,13 @@ Both rules are pinned by `KafkaOffsetCommitTests` against a real broker.
 
 - **The source systems are simulated.** `/mock-sources/*` generates trade data
   in two deliberately different shapes. There is no real ERP behind it.
-- **Databricks and Microsoft Fabric are the documented production target, not a
-  deployment.** The landing writer produces date-partitioned Parquet, which is
-  the format those platforms read, but nothing here has been deployed to either.
+- **The Databricks notebook reads a committed sample, not a live feed.** It runs
+  on Free Edition and builds real Delta tables from real gateway output, which
+  shows the format and partitioning are right. Pointing the landing writer at
+  cloud object storage that Databricks reads directly is a configuration change
+  to `Landing__ParquetRootPath`, and it has not been done.
+- **Microsoft Fabric is a documented target only.** Nothing has been deployed
+  to it.
 - **Terraform is validated, not applied.** The configuration is real and CI
   checks it; provisioning it needs an Azure subscription.
 - **API authentication is a shared key, not per-caller identity.** It is enough
@@ -225,8 +242,11 @@ src/BunkerFlow.Contracts     the shared event contract and serializer settings
 src/BunkerFlow.Integration   normalization, validation, dedupe, retry, messaging, landing
 src/BunkerFlow.Api           REST gateway, health, metrics, simulated sources
 src/BunkerFlow.Worker        batch puller, Kafka consumer, Service Bus landing worker
-tests/                       xUnit tests, including the API in-process
+tests/                       fast xUnit suite plus the broker-backed suite
 infra/terraform              Azure Service Bus as code
+infra/servicebus-emulator    emulator topology for the compose stack
+notebooks/                   Databricks bronze/silver/gold over the landed Parquet
+samples/landing/             real gateway output, so the notebook needs no setup
 ```
 
 Built with .NET 10 and Claude Code.
