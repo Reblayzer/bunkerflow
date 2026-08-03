@@ -149,6 +149,37 @@ workspace with no cloud subscription and no setup beyond signing in.
 
 Import it with **Workspace → Import → File**, then Run all.
 
+Both ingestion channels land in one table, distinguishable only by a column.
+That is the common event contract doing its job: a trade pulled from a REST
+endpoint on a schedule and one consumed from a Kafka topic are queried
+identically.
+
+| channel | source_system | trades | total_mt |
+| --- | --- | ---: | ---: |
+| Batch | trading-desk | 25 | 25041.0 |
+| Batch | erp | 22 | 25430.4 |
+| Stream | port-telemetry | 3 | 3050.5 |
+
+Gold, top rows by value:
+
+| port | product | trades | total_mt | total_usd | avg_price | vessels |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| DKFRC | VLSFO | 5 | 7073.4 | 4533221.32 | 646.81 | 4 |
+| AEFJR | HSFO | 5 | 5356.3 | 3075278.20 | 579.75 | 3 |
+| DKFRC | HSFO | 4 | 5683.3 | 2964543.16 | 524.46 | 3 |
+| SGSIN | LSMGO | 5 | 5219.0 | 2754816.92 | 556.35 | 5 |
+| SGSIN | MGO | 4 | 3811.8 | 2292219.97 | 599.36 | 4 |
+
+The silver layer's deduplication removes nothing from this sample: 50 bronze
+rows in, 50 silver rows out. That is the expected result, not a no-op. The
+gateway already deduped on the business key before publishing, so the notebook
+finding nothing to drop is the two layers agreeing. It stays in because the
+landing writer flushes in batches and Service Bus is at-least-once, so a
+replayed file would otherwise double-count.
+
+`scripts/sample-aggregates.sh` recomputes these figures straight from the
+sample Parquet, so the table above can be checked against the notebook.
+
 ### Tests
 
 ```bash
