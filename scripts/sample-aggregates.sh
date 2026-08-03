@@ -44,7 +44,7 @@ foreach (var group in silver
 {
     Console.WriteLine(
         $"{group.Key.Channel,-7} | {group.Key.SourceSystem,-14} | {group.Count(),6} | " +
-        $"{Math.Round(group.Sum(r => r.QuantityMt), 1),9}");
+        $"{Round(group.Sum(r => r.QuantityMt), 1),9}");
 }
 
 Console.WriteLine();
@@ -55,11 +55,17 @@ foreach (var group in silver
 {
     Console.WriteLine(
         $"{group.Key.Port,-5} | {group.Key.Product,-7} | {group.Count(),6} | " +
-        $"{Math.Round(group.Sum(r => r.QuantityMt), 1),8} | " +
-        $"{Math.Round(group.Sum(r => r.TotalUsd), 2),9} | " +
-        $"{Math.Round(group.Average(r => r.PriceUsdPerMt), 2),9} | " +
+        $"{Round(group.Sum(r => r.QuantityMt), 1),8} | " +
+        $"{Round(group.Sum(r => r.TotalUsd), 2),9} | " +
+        $"{Round(group.Average(r => r.PriceUsdPerMt), 2),9} | " +
         $"{group.Select(r => r.VesselImo).Distinct().Count(),7}");
 }
+
+// Spark's round() is half-up. C#'s Math.Round defaults to banker's rounding,
+// which disagrees on exact midpoints, so this script would report a figure the
+// notebook never produced.
+static decimal Round(decimal value, int decimals) =>
+    Math.Round(value, decimals, MidpointRounding.AwayFromZero);
 
 class Row
 {

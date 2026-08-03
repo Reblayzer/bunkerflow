@@ -160,7 +160,9 @@ identically.
 | Batch | erp | 22 | 25430.4 |
 | Stream | port-telemetry | 3 | 3050.5 |
 
-Gold, top rows by value:
+Gold, top rows by value, as the notebook renders it:
+
+![Gold table in Databricks: volume and value by port and fuel grade](docs/databricks-gold.png)
 
 | port | product | trades | total_mt | total_usd | avg_price | vessels |
 | --- | --- | ---: | ---: | ---: | ---: | ---: |
@@ -178,7 +180,10 @@ landing writer flushes in batches and Service Bus is at-least-once, so a
 replayed file would otherwise double-count.
 
 `scripts/sample-aggregates.sh` recomputes these figures straight from the
-sample Parquet, so the table above can be checked against the notebook.
+sample Parquet, so the numbers above can be checked against the notebook rather
+than taken on trust. It rounds half-up to match Spark; C#'s default is banker's
+rounding, which disagrees on exact midpoints and made the two differ by 0.1 on
+one row before it was fixed.
 
 ### Tests
 
