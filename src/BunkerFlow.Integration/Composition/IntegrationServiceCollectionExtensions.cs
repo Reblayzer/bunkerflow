@@ -66,12 +66,15 @@ public static class IntegrationServiceCollectionExtensions
             return;
         }
 
+        // One client per credential, not one per process. Least-privilege rules
+        // produce entity-scoped connection strings, so a client built for the
+        // topic cannot address the dead-letter queue even though both only send.
         services.AddSingleton(_ => new ServiceBusClient(options.ConnectionString));
         services.AddSingleton<IEventPublisher>(provider => new ServiceBusEventPublisher(
             provider.GetRequiredService<ServiceBusClient>(),
             options));
         services.AddSingleton<IDeadLetterSink>(provider => new ServiceBusDeadLetterSink(
-            provider.GetRequiredService<ServiceBusClient>(),
+            new ServiceBusClient(options.EffectiveDeadLetterConnectionString),
             options,
             provider.GetRequiredService<ILogger<ServiceBusDeadLetterSink>>()));
     }

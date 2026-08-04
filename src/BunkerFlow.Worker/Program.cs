@@ -1,3 +1,4 @@
+using Azure.Messaging.ServiceBus;
 using BunkerFlow.Integration.Composition;
 using BunkerFlow.Integration.Landing;
 using BunkerFlow.Integration.Messaging;
@@ -68,10 +69,20 @@ static void AddLanding(WebApplicationBuilder builder)
 
     // Without a broker there is no subscription to read, so the worker runs
     // ingestion only and the API serves whatever the in-process store holds.
-    if (serviceBusOptions.IsConfigured)
+    if (!serviceBusOptions.IsConfigured)
     {
-        builder.Services.AddHostedService<ServiceBusLandingWorker>();
+        return;
     }
+
+    // The landing worker gets its own client built from the listen credential.
+    // The one registered for the gateway is send-only and cannot receive.
+    builder.Services.AddSingleton<IHostedService>(provider => new ServiceBusLandingWorker(
+        new ServiceBusClient(serviceBusOptions.EffectiveListenConnectionString),
+        serviceBusOptions,
+        provider.GetRequiredService<LandingOptions>(),
+        provider.GetRequiredService<IEventRepository>(),
+        provider.GetRequiredService<ILandingWriter>(),
+        provider.GetRequiredService<ILogger<ServiceBusLandingWorker>>()));
 }
 
 static async Task InitializeLandingStoreAsync(WebApplication app)

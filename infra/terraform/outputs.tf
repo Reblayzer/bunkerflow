@@ -28,3 +28,15 @@ output "gateway_send_connection_string" {
   value       = azurerm_servicebus_topic_authorization_rule.gateway_send.primary_connection_string
   sensitive   = true
 }
+
+output "landing_listen_connection_string" {
+  description = "Listen-only connection string for the landing worker."
+  value       = azurerm_servicebus_topic_authorization_rule.landing_listen.primary_connection_string
+  sensitive   = true
+}
+
+output "dead_letter_send_connection_string" {
+  description = "Send-only connection string for the dead-letter queue."
+  value       = azurerm_servicebus_queue_authorization_rule.dead_letter_send.primary_connection_string
+  sensitive   = true
+}

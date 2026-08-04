@@ -69,7 +69,8 @@ a few field aliases, not a new code path.
 | Normalization | Alias-driven field mapping, so each source keeps its own field names; handles comma decimals and mixed timestamp offsets |
 | Data quality | IMO check-digit validation, UN/LOCODE format, known fuel grades, quantity and price ranges, future-dated trades |
 | Idempotency | Reserve-then-release on the business key, atomic in Postgres via the primary key |
-| Messaging | Service Bus topic with a deterministic message id, application properties for subscription filters, retry with full-jitter backoff on transient errors only |
+| Messaging | Service Bus topic with a deterministic message id so the broker rejects replays, application properties for subscription filters, retry with full-jitter backoff on transient errors only |
+| Credentials | Separate send, listen and dead-letter credentials, so no component can do another's job |
 | Dead-lettering | A dedicated queue for records rejected before publication, and the subscription's own DLQ for ones that fail after delivery |
 | Landing | Postgres for querying, Parquet partitioned by trade date for the lakehouse |
 | API | `POST /ingest`, `POST /ingest/batch`, `GET /events`, `GET /health/live`, `GET /health/ready`, `GET /metrics`, OpenAPI |
@@ -210,8 +211,19 @@ terraform init -backend=false
 terraform validate
 ```
 
-`terraform plan` and `apply` need an Azure subscription. CI runs `fmt` and
-`validate` on every push.
+CI runs `fmt` and `validate` on every push. It has also been applied to a real
+subscription: the gateway ran against the resulting namespace, and broker-side
+duplicate detection, the subscription filter and the least-privilege
+credentials were each tested with the resources live. The CLI output is in
+[docs/azure-verification.md](docs/azure-verification.md). The resources were
+destroyed afterwards.
+
+To recreate them yourself:
+
+```bash
+az login
+./scripts/tf.sh apply -var location=northeurope
+```
 
 ## Design notes
 
@@ -261,14 +273,16 @@ Both rules are pinned by `KafkaOffsetCommitTests` against a real broker.
   to `Landing__ParquetRootPath`, and it has not been done.
 - **Microsoft Fabric is a documented target only.** Nothing has been deployed
   to it.
-- **Terraform is validated, not applied.** The configuration is real and CI
-  checks it; provisioning it needs an Azure subscription.
+- **Terraform has been applied once, to prove it, and then destroyed.** Nothing
+  is running in Azure now. See
+  [docs/azure-verification.md](docs/azure-verification.md).
 - **API authentication is a shared key, not per-caller identity.** It is enough
   to keep the gateway from being open to anyone who can reach it, but it does
   not tell two source systems apart. OAuth or mTLS is the real answer.
-- **Service Bus authentication is a send-only SAS connection string.** Moving
-  both hosts to a managed identity is the next hardening step, and
-  `local_auth_enabled` is already a variable for it.
+- **Service Bus authentication is SAS, split by role.** Send, listen and
+  dead-letter are separate credentials, none with Manage. Moving them to a
+  managed identity is the next hardening step, and `local_auth_enabled` is
+  already a variable for it.
 - No horizontal scaling, no multi-region, no schema registry.
 
 ## Repository layout

@@ -77,13 +77,26 @@ resource "azurerm_servicebus_queue" "dead_letter" {
 }
 
 # Least privilege: the gateway sends, the landing worker receives. Neither gets
-# the namespace-wide manage rights.
+# the namespace-wide manage rights, so neither can create or delete entities.
 resource "azurerm_servicebus_topic_authorization_rule" "gateway_send" {
   name     = "gateway-send"
   topic_id = azurerm_servicebus_topic.events.id
 
   listen = false
   send   = true
+  manage = false
+}
+
+# Service Bus has no subscription-level authorization rules, so receiving from a
+# subscription is granted on the topic. The landing worker gets Listen and
+# nothing else: it cannot publish, which keeps a consumer bug from turning into
+# a poison-message loop of its own making.
+resource "azurerm_servicebus_topic_authorization_rule" "landing_listen" {
+  name     = "landing-listen"
+  topic_id = azurerm_servicebus_topic.events.id
+
+  listen = true
+  send   = false
   manage = false
 }
 

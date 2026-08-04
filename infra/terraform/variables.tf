@@ -1,3 +1,13 @@
+variable "subscription_id" {
+  description = <<-EOT
+    Azure subscription to deploy into. Leave unset to take it from the
+    ARM_SUBSCRIPTION_ID environment variable, which is how a pipeline supplies
+    it without putting an id in source control.
+  EOT
+  type        = string
+  default     = null
+}
+
 variable "environment" {
   description = "Environment short name, used in every resource name."
   type        = string

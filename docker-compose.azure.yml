@@ -1,0 +1,38 @@
+# Points the stack at a real Azure Service Bus namespace instead of the local
+# emulator, using the least-privilege credentials Terraform provisions.
+#
+#   source /tmp/bunkerflow-azure.env   # written by the Terraform outputs
+#   docker compose -f docker-compose.yml -f docker-compose.azure.yml up -d
+#
+# Nothing here holds a key: the values come from the environment, so this file
+# is safe to commit.
+services:
+  servicebus:
+    # The emulator is not needed when the real namespace is in play.
+    profiles: ["emulator-only"]
+
+  servicebus-db:
+    profiles: ["emulator-only"]
+
+  api:
+    environment:
+      ServiceBus__ConnectionString: "${SB_SEND}"
+      ServiceBus__DeadLetterConnectionString: "${SB_DEADLETTER}"
+    # !override replaces the base file's list rather than merging into it,
+    # which would otherwise keep a dependency on the disabled emulator.
+    depends_on: !override
+      postgres:
+        condition: service_healthy
+
+  worker:
+    environment:
+      ServiceBus__ConnectionString: "${SB_SEND}"
+      ServiceBus__ListenConnectionString: "${SB_LISTEN}"
+      ServiceBus__DeadLetterConnectionString: "${SB_DEADLETTER}"
+    depends_on: !override
+      postgres:
+        condition: service_healthy
+      redpanda:
+        condition: service_healthy
+      api:
+        condition: service_started
