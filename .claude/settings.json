@@ -1,0 +1,28 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "statusMessage": "dotnet format",
+            "timeout": 60,
+            "command": "python3 -c \"import json,sys;d=json.load(sys.stdin);print(d.get('tool_input',{}).get('file_path') or '')\" | { read -r f; case \"$f\" in *.cs) cd \"${CLAUDE_PROJECT_DIR:-.}\" && dotnet format whitespace BunkerFlow.slnx --include \"$f\" --no-restore --verbosity quiet ;; esac; } 2>/dev/null || true"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "statusMessage": "terraform fmt",
+            "timeout": 30,
+            "command": "python3 -c \"import json,sys;d=json.load(sys.stdin);print(d.get('tool_input',{}).get('file_path') or '')\" | { read -r f; case \"$f\" in *.tf) terraform fmt \"$f\" ;; esac; } 2>/dev/null || true"
+          }
+        ]
+      }
+    ]
+  }
+}
