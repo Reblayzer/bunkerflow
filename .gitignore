@@ -9,3 +9,12 @@ TestResults/
 *.tfstate
 *.tfstate.*
 .terraform.lock.hcl
+
+# graphify AST cache: deterministic, regenerates in under a second, and is
+# version-pinned so a graphify upgrade orphans the whole directory.
+graphify-out/cache/ast/
+
+# graphify machine-local pointers: absolute paths to this machine's interpreter
+# and checkout, regenerated per machine and wrong in anyone else's clone.
+graphify-out/.graphify_python
+graphify-out/.graphify_root
