@@ -1,0 +1,11 @@
+# Links this project to a Databricks workspace for the VS Code extension.
+# See https://docs.databricks.com/dev-tools/bundles/index.html
+bundle:
+  name: bunkerflow
+
+targets:
+  dev:
+    mode: development
+    default: true
+    workspace:
+      host: https://adb-7405615556415253.13.azuredatabricks.net

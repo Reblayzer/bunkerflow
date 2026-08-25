@@ -5,6 +5,8 @@ obj/
 .env
 data/
 TestResults/
+.venv/
+.databricks/
 .terraform/
 *.tfstate
 *.tfstate.*
