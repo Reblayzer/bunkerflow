@@ -1,0 +1,34 @@
+{
+  // Extensions VS Code will offer to install when this workspace is opened.
+  "recommendations": [
+    // .NET 10 solution: src/ and tests/ via BunkerFlow.slnx
+    "ms-dotnettools.csdevkit",
+    "ms-dotnettools.csharp",
+
+    // infra/terraform: azurerm stack
+    "hashicorp.terraform",
+
+    // docker-compose*.yml plus the API, Worker and Service Bus emulator images
+    "ms-azuretools.vscode-containers",
+
+    // scripts/*.sh
+    "timonwong.shellcheck",
+    "foxundermoon.shell-format",
+
+    // compose files and .github/workflows/ci.yml
+    "redhat.vscode-yaml",
+    "github.vscode-github-actions",
+
+    // README.md, PROJECT_BRAINSTORM.md, docs/
+    "davidanson.vscode-markdownlint",
+
+    // notebooks/bunkerflow_lakehouse.py
+    "ms-python.python",
+
+    // samples/landing/**/*.parquet
+    "dvirtz.parquet-viewer",
+
+    // the postgres service backing the dedup store and event repository
+    "ms-ossdata.vscode-pgsql"
+  ]
+}

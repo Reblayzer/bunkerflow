@@ -24,7 +24,7 @@ Holding Group Unified Data Platform).
 
 ## Architecture sketch
 
-```
+```text
  mock business systems
    |                 \
    | (batch: scheduled REST pull)   (streaming: Kafka topic)
@@ -62,6 +62,7 @@ Holding Group Unified Data Platform).
 ## v1 scope
 
 **In:**
+
 - One batch source (scheduled pull from a mock REST endpoint) and one streaming source (Kafka topic).
 - Common event contract + schema validation + dedupe (idempotent consumer).
 - Azure Service Bus topic with one subscription and a dead-letter path.
@@ -71,6 +72,7 @@ Holding Group Unified Data Platform).
 - README with the architecture diagram and an honest "simulated sources, Databricks/Fabric is the production target" note.
 
 **Out (v1):**
+
 - Real Databricks / Microsoft Fabric deployment (documented as the next step).
 - Real business-system connectors (sources are mocked).
 - Auth/RBAC beyond a basic API key.

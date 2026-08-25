@@ -1,0 +1,578 @@
+{
+  ".vscode/extensions.json": {
+    "mtime": 1786971125.9352229,
+    "seen": 1787487697.0982158,
+    "ast_hash": "e77d6bc819d97d1a2633b7e3271ce17a",
+    "semantic_hash": "e77d6bc819d97d1a2633b7e3271ce17a"
+  },
+  "BunkerFlow.slnx": {
+    "mtime": 1785702267.3924026,
+    "seen": 1787487697.0982199,
+    "ast_hash": "0b55ed36120b0d40cdb95f9eeaabf6ad",
+    "semantic_hash": "0b55ed36120b0d40cdb95f9eeaabf6ad"
+  },
+  "infra/servicebus-emulator/config.json": {
+    "mtime": 1785676101.9985163,
+    "seen": 1787487697.098221,
+    "ast_hash": "2fc0b1cbdfeb3e3d02890662594e306f",
+    "semantic_hash": "2fc0b1cbdfeb3e3d02890662594e306f"
+  },
+  "infra/terraform/main.tf": {
+    "mtime": 1785758921.9500465,
+    "seen": 1787487697.0982218,
+    "ast_hash": "605fd93d62b1208b883340ea2a4ecf11",
+    "semantic_hash": "605fd93d62b1208b883340ea2a4ecf11"
+  },
+  "infra/terraform/outputs.tf": {
+    "mtime": 1785758925.296607,
+    "seen": 1787487697.0982223,
+    "ast_hash": "a7f624122e5ee16f09aa76212bb0feed",
+    "semantic_hash": "a7f624122e5ee16f09aa76212bb0feed"
+  },
+  "infra/terraform/variables.tf": {
+    "mtime": 1785758437.855771,
+    "seen": 1787487697.0982227,
+    "ast_hash": "092c8b17e125f176830e997813396294",
+    "semantic_hash": "092c8b17e125f176830e997813396294"
+  },
+  "infra/terraform/versions.tf": {
+    "mtime": 1785758431.4695394,
+    "seen": 1787487697.0982237,
+    "ast_hash": "fc91bccdcbdf16f121c0d29c4117bb9a",
+    "semantic_hash": "fc91bccdcbdf16f121c0d29c4117bb9a"
+  },
+  "notebooks/bunkerflow_lakehouse.py": {
+    "mtime": 1785750154.1749556,
+    "seen": 1787487697.098224,
+    "ast_hash": "837dd0f036b2ecd7d02cabd31ae11e9a",
+    "semantic_hash": "837dd0f036b2ecd7d02cabd31ae11e9a"
+  },
+  "scripts/env.sh": {
+    "mtime": 1785674944.4848683,
+    "seen": 1787487697.0982244,
+    "ast_hash": "a67386d66978a10edc94cea441e96678",
+    "semantic_hash": "a67386d66978a10edc94cea441e96678"
+  },
+  "scripts/inspect-parquet.sh": {
+    "mtime": 1785750177.5410662,
+    "seen": 1787487697.0982246,
+    "ast_hash": "e6ceb66db49c78c63856e5b297ccc418",
+    "semantic_hash": "e6ceb66db49c78c63856e5b297ccc418"
+  },
+  "scripts/sample-aggregates.sh": {
+    "mtime": 1785753627.8724604,
+    "seen": 1787487697.098225,
+    "ast_hash": "91278d6c1fe3f472a2e3786d8335c0a4",
+    "semantic_hash": "91278d6c1fe3f472a2e3786d8335c0a4"
+  },
+  "scripts/seed-kafka.sh": {
+    "mtime": 1785676726.4642792,
+    "seen": 1787487697.0982256,
+    "ast_hash": "969ade674dcedf7d3e3caea9b3e4374c",
+    "semantic_hash": "969ade674dcedf7d3e3caea9b3e4374c"
+  },
+  "scripts/smoke.sh": {
+    "mtime": 1785676205.6940894,
+    "seen": 1787487697.098226,
+    "ast_hash": "ad9200151f84cdea09efdb3697007139",
+    "semantic_hash": "ad9200151f84cdea09efdb3697007139"
+  },
+  "scripts/test-broker.sh": {
+    "mtime": 1785702418.5203407,
+    "seen": 1787487697.0982268,
+    "ast_hash": "238d5062ae9302b967b43b24439f2fe3",
+    "semantic_hash": "238d5062ae9302b967b43b24439f2fe3"
+  },
+  "scripts/test.sh": {
+    "mtime": 1785702416.7200618,
+    "seen": 1787487697.098227,
+    "ast_hash": "14baab0a566b3f5f5494c098002a03f4",
+    "semantic_hash": "14baab0a566b3f5f5494c098002a03f4"
+  },
+  "scripts/tf.sh": {
+    "mtime": 1785758440.8479426,
+    "seen": 1787487697.0982275,
+    "ast_hash": "65664f9ed01b7e1c67e0d5904cd62b0e",
+    "semantic_hash": "65664f9ed01b7e1c67e0d5904cd62b0e"
+  },
+  "src/BunkerFlow.Api/ApiResponse.cs": {
+    "mtime": 1785675716.807682,
+    "seen": 1787487697.098228,
+    "ast_hash": "7d81de6e5e8ee0781000b0dab7afeb13",
+    "semantic_hash": "7d81de6e5e8ee0781000b0dab7afeb13"
+  },
+  "src/BunkerFlow.Api/BunkerFlow.Api.csproj": {
+    "mtime": 1785675822.0894248,
+    "seen": 1787487697.0982282,
+    "ast_hash": "31e7fcc893068344eeb280155db0fb5d",
+    "semantic_hash": "31e7fcc893068344eeb280155db0fb5d"
+  },
+  "src/BunkerFlow.Api/Endpoints/EventEndpoints.cs": {
+    "mtime": 1785702163.4202664,
+    "seen": 1787487697.0982287,
+    "ast_hash": "ad8ee3a9867d3a14ee818ab86c7bf555",
+    "semantic_hash": "ad8ee3a9867d3a14ee818ab86c7bf555"
+  },
+  "src/BunkerFlow.Api/Endpoints/IngestEndpoints.cs": {
+    "mtime": 1785702159.223922,
+    "seen": 1787487697.098229,
+    "ast_hash": "430884dfd0a1202f0891d93b967a102f",
+    "semantic_hash": "430884dfd0a1202f0891d93b967a102f"
+  },
+  "src/BunkerFlow.Api/Endpoints/MockSourceEndpoints.cs": {
+    "mtime": 1785676235.5760062,
+    "seen": 1787487697.0982294,
+    "ast_hash": "416874a6ebac3de70099798ed1f638e5",
+    "semantic_hash": "416874a6ebac3de70099798ed1f638e5"
+  },
+  "src/BunkerFlow.Api/Endpoints/OperationalEndpoints.cs": {
+    "mtime": 1785675751.650791,
+    "seen": 1787487697.0982301,
+    "ast_hash": "27ad0b7452043ae6ddf8658f75193bf9",
+    "semantic_hash": "27ad0b7452043ae6ddf8658f75193bf9"
+  },
+  "src/BunkerFlow.Api/Program.cs": {
+    "mtime": 1785702184.1756594,
+    "seen": 1787487697.0982306,
+    "ast_hash": "6f199b4f6bf9b14c97fab387aa0a2eac",
+    "semantic_hash": "6f199b4f6bf9b14c97fab387aa0a2eac"
+  },
+  "src/BunkerFlow.Api/Properties/launchSettings.json": {
+    "mtime": 1785674966.6361697,
+    "seen": 1787487697.098231,
+    "ast_hash": "8b8acc4f39c7482183f8e7992e83a6fa",
+    "semantic_hash": "8b8acc4f39c7482183f8e7992e83a6fa"
+  },
+  "src/BunkerFlow.Api/Security/ApiKeyEndpointFilter.cs": {
+    "mtime": 1785702151.8265865,
+    "seen": 1787487697.0982313,
+    "ast_hash": "208bba1fc525b534cbcf6cd790c26ef4",
+    "semantic_hash": "208bba1fc525b534cbcf6cd790c26ef4"
+  },
+  "src/BunkerFlow.Api/Security/ApiKeyOptions.cs": {
+    "mtime": 1785702137.8597517,
+    "seen": 1787487697.0982318,
+    "ast_hash": "8308802558221e9ce632919c8804eb95",
+    "semantic_hash": "8308802558221e9ce632919c8804eb95"
+  },
+  "src/BunkerFlow.Api/appsettings.Development.json": {
+    "mtime": 1785674966.6241713,
+    "seen": 1787487697.0982323,
+    "ast_hash": "804b473502a4c415cf75db61c56c32aa",
+    "semantic_hash": "804b473502a4c415cf75db61c56c32aa"
+  },
+  "src/BunkerFlow.Api/appsettings.json": {
+    "mtime": 1785702186.2564054,
+    "seen": 1787487697.0982327,
+    "ast_hash": "f6d9804c718e66d8e02cec518217185c",
+    "semantic_hash": "f6d9804c718e66d8e02cec518217185c"
+  },
+  "src/BunkerFlow.Contracts/BunkerFlow.Contracts.csproj": {
+    "mtime": 1785675475.1614776,
+    "seen": 1787487697.098233,
+    "ast_hash": "b9a9fe6cfe596e46245de936547ef1c8",
+    "semantic_hash": "b9a9fe6cfe596e46245de936547ef1c8"
+  },
+  "src/BunkerFlow.Contracts/BunkerTrade.cs": {
+    "mtime": 1785675010.315943,
+    "seen": 1787487697.0982337,
+    "ast_hash": "580fabfe550e5f3967357c562c310ef9",
+    "semantic_hash": "580fabfe550e5f3967357c562c310ef9"
+  },
+  "src/BunkerFlow.Contracts/EventSerialization.cs": {
+    "mtime": 1785675028.0626197,
+    "seen": 1787487697.0982342,
+    "ast_hash": "442f854f0e7e97223ca591cc3f23e7ef",
+    "semantic_hash": "442f854f0e7e97223ca591cc3f23e7ef"
+  },
+  "src/BunkerFlow.Contracts/IntegrationEvent.cs": {
+    "mtime": 1785675128.7500246,
+    "seen": 1787487697.0982344,
+    "ast_hash": "783c0f55560f3638a10e1a24d711696c",
+    "semantic_hash": "783c0f55560f3638a10e1a24d711696c"
+  },
+  "src/BunkerFlow.Contracts/SourceRecord.cs": {
+    "mtime": 1785675015.6196725,
+    "seen": 1787487697.098235,
+    "ast_hash": "d7aebd83c30708559152c6ed3ac36d25",
+    "semantic_hash": "d7aebd83c30708559152c6ed3ac36d25"
+  },
+  "src/BunkerFlow.Integration/BunkerFlow.Integration.csproj": {
+    "mtime": 1785675706.3167038,
+    "seen": 1787487697.0982354,
+    "ast_hash": "edf94e0a23cbf4199de6aff5b035027d",
+    "semantic_hash": "edf94e0a23cbf4199de6aff5b035027d"
+  },
+  "src/BunkerFlow.Integration/Composition/IntegrationServiceCollectionExtensions.cs": {
+    "mtime": 1785759051.2125354,
+    "seen": 1787487697.0982356,
+    "ast_hash": "a0dc24ceaf83320b8468f001cb4cd543",
+    "semantic_hash": "a0dc24ceaf83320b8468f001cb4cd543"
+  },
+  "src/BunkerFlow.Integration/DeadLettering/IDeadLetterSink.cs": {
+    "mtime": 1785675169.876998,
+    "seen": 1787487697.098236,
+    "ast_hash": "736a85833346a35a45ceab3b6a994c1b",
+    "semantic_hash": "736a85833346a35a45ceab3b6a994c1b"
+  },
+  "src/BunkerFlow.Integration/DeadLettering/InMemoryDeadLetterSink.cs": {
+    "mtime": 1785675175.6238291,
+    "seen": 1787487697.0982366,
+    "ast_hash": "f1bb5b6994c1d7327f4f4098dc303ce2",
+    "semantic_hash": "f1bb5b6994c1d7327f4f4098dc303ce2"
+  },
+  "src/BunkerFlow.Integration/Errors/IntegrationErrors.cs": {
+    "mtime": 1785675059.298609,
+    "seen": 1787487697.098237,
+    "ast_hash": "98de5c2b2804d08cf6101b5fb930931b",
+    "semantic_hash": "98de5c2b2804d08cf6101b5fb930931b"
+  },
+  "src/BunkerFlow.Integration/Idempotency/IDeduplicationStore.cs": {
+    "mtime": 1785675117.612782,
+    "seen": 1787487697.0982375,
+    "ast_hash": "ce887635becd6ca9947675f00610e5a6",
+    "semantic_hash": "ce887635becd6ca9947675f00610e5a6"
+  },
+  "src/BunkerFlow.Integration/Idempotency/InMemoryDeduplicationStore.cs": {
+    "mtime": 1785675122.321633,
+    "seen": 1787487697.098238,
+    "ast_hash": "46eba107226420b4517f5ad28f097fee",
+    "semantic_hash": "46eba107226420b4517f5ad28f097fee"
+  },
+  "src/BunkerFlow.Integration/Idempotency/PostgresDeduplicationStore.cs": {
+    "mtime": 1785675616.2568507,
+    "seen": 1787487697.0982385,
+    "ast_hash": "40adfe8238e8349dddd9e0765560df76",
+    "semantic_hash": "40adfe8238e8349dddd9e0765560df76"
+  },
+  "src/BunkerFlow.Integration/Landing/EventQuery.cs": {
+    "mtime": 1785675562.9438357,
+    "seen": 1787487697.0982387,
+    "ast_hash": "b79e9bb6ed11b22bb6c1c346176c67ac",
+    "semantic_hash": "b79e9bb6ed11b22bb6c1c346176c67ac"
+  },
+  "src/BunkerFlow.Integration/Landing/IEventRepository.cs": {
+    "mtime": 1785675570.1065886,
+    "seen": 1787487697.0982392,
+    "ast_hash": "37d48c2f0441ed028a82f56f0c725cdb",
+    "semantic_hash": "37d48c2f0441ed028a82f56f0c725cdb"
+  },
+  "src/BunkerFlow.Integration/Landing/ILandingWriter.cs": {
+    "mtime": 1785675642.6676106,
+    "seen": 1787487697.09824,
+    "ast_hash": "c176217468f8652df04ebab4e0b27f06",
+    "semantic_hash": "c176217468f8652df04ebab4e0b27f06"
+  },
+  "src/BunkerFlow.Integration/Landing/InMemoryEventRepository.cs": {
+    "mtime": 1785675576.3653636,
+    "seen": 1787487697.0982401,
+    "ast_hash": "106a3ba35bb1e3ca5005eed44fd1107c",
+    "semantic_hash": "106a3ba35bb1e3ca5005eed44fd1107c"
+  },
+  "src/BunkerFlow.Integration/Landing/LandingOptions.cs": {
+    "mtime": 1785675693.5862677,
+    "seen": 1787487697.0982409,
+    "ast_hash": "933b8b4a24d6fb10ea9df54d97713593",
+    "semantic_hash": "933b8b4a24d6fb10ea9df54d97713593"
+  },
+  "src/BunkerFlow.Integration/Landing/ParquetLandingWriter.cs": {
+    "mtime": 1785675640.3360252,
+    "seen": 1787487697.0982413,
+    "ast_hash": "03f1935286d71f7f28b7ea8c41e0ad1d",
+    "semantic_hash": "03f1935286d71f7f28b7ea8c41e0ad1d"
+  },
+  "src/BunkerFlow.Integration/Landing/PostgresEventRepository.cs": {
+    "mtime": 1785675610.426042,
+    "seen": 1787487697.0982416,
+    "ast_hash": "738c795b56f82148da8301b35a454495",
+    "semantic_hash": "738c795b56f82148da8301b35a454495"
+  },
+  "src/BunkerFlow.Integration/Messaging/ServiceBusDeadLetterSink.cs": {
+    "mtime": 1785675544.3343513,
+    "seen": 1787487697.098242,
+    "ast_hash": "263f983ca9c65cd1252087c8fb1c5b10",
+    "semantic_hash": "263f983ca9c65cd1252087c8fb1c5b10"
+  },
+  "src/BunkerFlow.Integration/Messaging/ServiceBusEventPublisher.cs": {
+    "mtime": 1785675535.5021577,
+    "seen": 1787487697.0982425,
+    "ast_hash": "46ad0da1d301ae6b27b7f816f3605bf7",
+    "semantic_hash": "46ad0da1d301ae6b27b7f816f3605bf7"
+  },
+  "src/BunkerFlow.Integration/Messaging/ServiceBusOptions.cs": {
+    "mtime": 1785759039.9099543,
+    "seen": 1787487697.098243,
+    "ast_hash": "00ec4306c9ee4bfcf7c46186bd4120fc",
+    "semantic_hash": "00ec4306c9ee4bfcf7c46186bd4120fc"
+  },
+  "src/BunkerFlow.Integration/Normalization/BunkerTradeNormalizer.cs": {
+    "mtime": 1785675146.744384,
+    "seen": 1787487697.0982435,
+    "ast_hash": "b677eeffb4e5e5eda4068816747902a0",
+    "semantic_hash": "b677eeffb4e5e5eda4068816747902a0"
+  },
+  "src/BunkerFlow.Integration/Normalization/IRecordNormalizer.cs": {
+    "mtime": 1785675061.9515264,
+    "seen": 1787487697.098244,
+    "ast_hash": "b52c4466ddaead2f28354e11fd15f13b",
+    "semantic_hash": "b52c4466ddaead2f28354e11fd15f13b"
+  },
+  "src/BunkerFlow.Integration/Observability/PipelineMetrics.cs": {
+    "mtime": 1785675195.1630843,
+    "seen": 1787487697.0982444,
+    "ast_hash": "cd5960475493963ab6dc43e75941b558",
+    "semantic_hash": "cd5960475493963ab6dc43e75941b558"
+  },
+  "src/BunkerFlow.Integration/Pipeline/IngestionPipeline.cs": {
+    "mtime": 1785675227.3822849,
+    "seen": 1787487697.098245,
+    "ast_hash": "4970e6adefe8604082130a590f6dc084",
+    "semantic_hash": "4970e6adefe8604082130a590f6dc084"
+  },
+  "src/BunkerFlow.Integration/Pipeline/IngestionResult.cs": {
+    "mtime": 1785675205.369542,
+    "seen": 1787487697.0982451,
+    "ast_hash": "02eb167763115ec9912ef4f008cd5f7c",
+    "semantic_hash": "02eb167763115ec9912ef4f008cd5f7c"
+  },
+  "src/BunkerFlow.Integration/Publishing/IEventPublisher.cs": {
+    "mtime": 1785675162.1857474,
+    "seen": 1787487697.0982456,
+    "ast_hash": "24255665f9f57692e53859c72fcdcd4e",
+    "semantic_hash": "24255665f9f57692e53859c72fcdcd4e"
+  },
+  "src/BunkerFlow.Integration/Publishing/InMemoryEventPublisher.cs": {
+    "mtime": 1785675166.0448768,
+    "seen": 1787487697.098246,
+    "ast_hash": "3518c81140f9e6913b4a1e7094da858c",
+    "semantic_hash": "3518c81140f9e6913b4a1e7094da858c"
+  },
+  "src/BunkerFlow.Integration/Publishing/LoopbackEventPublisher.cs": {
+    "mtime": 1785676133.336816,
+    "seen": 1787487697.0982466,
+    "ast_hash": "5db5de64eb6abdb8d56634db2adc54ad",
+    "semantic_hash": "5db5de64eb6abdb8d56634db2adc54ad"
+  },
+  "src/BunkerFlow.Integration/Resilience/RetryPolicy.cs": {
+    "mtime": 1785675158.8358307,
+    "seen": 1787487697.098247,
+    "ast_hash": "8b070b7f01656d9850ac63c4589abe52",
+    "semantic_hash": "8b070b7f01656d9850ac63c4589abe52"
+  },
+  "src/BunkerFlow.Integration/Validation/BunkerTradeValidator.cs": {
+    "mtime": 1785675138.6825078,
+    "seen": 1787487697.0982478,
+    "ast_hash": "8daefe99489215b37f326f02e4b84db2",
+    "semantic_hash": "8daefe99489215b37f326f02e4b84db2"
+  },
+  "src/BunkerFlow.Integration/Validation/IEventValidator.cs": {
+    "mtime": 1785675093.0866542,
+    "seen": 1787487697.098248,
+    "ast_hash": "dbe6c81cff11ea00942d52df097d468b",
+    "semantic_hash": "dbe6c81cff11ea00942d52df097d468b"
+  },
+  "src/BunkerFlow.Integration/Validation/ValidationResult.cs": {
+    "mtime": 1785675085.1748505,
+    "seen": 1787487697.0982485,
+    "ast_hash": "659b2ee7096ffe4aaa08ac9590bebbea",
+    "semantic_hash": "659b2ee7096ffe4aaa08ac9590bebbea"
+  },
+  "src/BunkerFlow.Worker/BunkerFlow.Worker.csproj": {
+    "mtime": 1785676899.7904613,
+    "seen": 1787487697.098249,
+    "ast_hash": "662b6a2ff9cba4e50356d50f062b34c2",
+    "semantic_hash": "662b6a2ff9cba4e50356d50f062b34c2"
+  },
+  "src/BunkerFlow.Worker/Ingestion/BatchIngestionWorker.cs": {
+    "mtime": 1785675852.874265,
+    "seen": 1787487697.0982492,
+    "ast_hash": "07c9070832355dce6b595c4bc1bbbcd8",
+    "semantic_hash": "07c9070832355dce6b595c4bc1bbbcd8"
+  },
+  "src/BunkerFlow.Worker/Ingestion/BatchSourceOptions.cs": {
+    "mtime": 1785675838.9391325,
+    "seen": 1787487697.0982497,
+    "ast_hash": "8c1ec1f7fdbdd9af445b938c650513f6",
+    "semantic_hash": "8c1ec1f7fdbdd9af445b938c650513f6"
+  },
+  "src/BunkerFlow.Worker/Ingestion/KafkaIngestionWorker.cs": {
+    "mtime": 1785676850.9711554,
+    "seen": 1787487697.0982502,
+    "ast_hash": "f95a503771f532758fbcf264317c94e4",
+    "semantic_hash": "f95a503771f532758fbcf264317c94e4"
+  },
+  "src/BunkerFlow.Worker/Ingestion/KafkaOptions.cs": {
+    "mtime": 1785675865.4555988,
+    "seen": 1787487697.0982504,
+    "ast_hash": "23f4836e7083f75358f1230fc800c355",
+    "semantic_hash": "23f4836e7083f75358f1230fc800c355"
+  },
+  "src/BunkerFlow.Worker/Landing/ServiceBusLandingWorker.cs": {
+    "mtime": 1785675902.9639862,
+    "seen": 1787487697.098251,
+    "ast_hash": "21df3058c64a3020d8cb364b2952fb2a",
+    "semantic_hash": "21df3058c64a3020d8cb364b2952fb2a"
+  },
+  "src/BunkerFlow.Worker/Program.cs": {
+    "mtime": 1785758951.7509298,
+    "seen": 1787487697.0982516,
+    "ast_hash": "003be8a95c78277d599e1da69a10e97d",
+    "semantic_hash": "003be8a95c78277d599e1da69a10e97d"
+  },
+  "src/BunkerFlow.Worker/Properties/launchSettings.json": {
+    "mtime": 1785674967.556048,
+    "seen": 1787487697.0982518,
+    "ast_hash": "99c4f8cfd8c9593937a389a14c0a447f",
+    "semantic_hash": "99c4f8cfd8c9593937a389a14c0a447f"
+  },
+  "src/BunkerFlow.Worker/appsettings.Development.json": {
+    "mtime": 1785674967.5440495,
+    "seen": 1787487697.0982523,
+    "ast_hash": "efb942c8788e089b2e52cbbff0b04b7e",
+    "semantic_hash": "efb942c8788e089b2e52cbbff0b04b7e"
+  },
+  "src/BunkerFlow.Worker/appsettings.json": {
+    "mtime": 1785675975.6300128,
+    "seen": 1787487697.0982528,
+    "ast_hash": "212d446abd2b0e4e10e92adfe1eadc81",
+    "semantic_hash": "212d446abd2b0e4e10e92adfe1eadc81"
+  },
+  "tests/BunkerFlow.Broker.Tests/BunkerFlow.Broker.Tests.csproj": {
+    "mtime": 1785702356.3194718,
+    "seen": 1787487697.098253,
+    "ast_hash": "badf3868fd22d34e5fa1c1054b6e237e",
+    "semantic_hash": "badf3868fd22d34e5fa1c1054b6e237e"
+  },
+  "tests/BunkerFlow.Broker.Tests/KafkaOffsetCommitTests.cs": {
+    "mtime": 1785702371.0770018,
+    "seen": 1787487697.0982535,
+    "ast_hash": "ff62ef0702c06744658687c3382721a6",
+    "semantic_hash": "ff62ef0702c06744658687c3382721a6"
+  },
+  "tests/BunkerFlow.Broker.Tests/RedpandaFixture.cs": {
+    "mtime": 1785702386.375447,
+    "seen": 1787487697.0982537,
+    "ast_hash": "f5df0b954f75b169dc27db8ae8e512d1",
+    "semantic_hash": "f5df0b954f75b169dc27db8ae8e512d1"
+  },
+  "tests/BunkerFlow.Integration.Tests/ApiEndpointTests.cs": {
+    "mtime": 1785676166.9952643,
+    "seen": 1787487697.0982544,
+    "ast_hash": "f00b883775b486509361d77c7d36d35b",
+    "semantic_hash": "f00b883775b486509361d77c7d36d35b"
+  },
+  "tests/BunkerFlow.Integration.Tests/ApiKeyTests.cs": {
+    "mtime": 1785702208.5564053,
+    "seen": 1787487697.098255,
+    "ast_hash": "3aa38b5e5f68912a9cd0bbace3145439",
+    "semantic_hash": "3aa38b5e5f68912a9cd0bbace3145439"
+  },
+  "tests/BunkerFlow.Integration.Tests/BunkerFlow.Integration.Tests.csproj": {
+    "mtime": 1785676179.9940817,
+    "seen": 1787487697.0982554,
+    "ast_hash": "d0aaf3dafed796d269c48004fca66f3e",
+    "semantic_hash": "d0aaf3dafed796d269c48004fca66f3e"
+  },
+  "tests/BunkerFlow.Integration.Tests/BunkerTradeNormalizerTests.cs": {
+    "mtime": 1785675286.3641307,
+    "seen": 1787487697.0982556,
+    "ast_hash": "4c98b59f38144362a210ce1aa956d6a6",
+    "semantic_hash": "4c98b59f38144362a210ce1aa956d6a6"
+  },
+  "tests/BunkerFlow.Integration.Tests/BunkerTradeValidatorTests.cs": {
+    "mtime": 1785675300.0483072,
+    "seen": 1787487697.098256,
+    "ast_hash": "46b2b18fd2444ae7ad365726a9bd965d",
+    "semantic_hash": "46b2b18fd2444ae7ad365726a9bd965d"
+  },
+  "tests/BunkerFlow.Integration.Tests/InMemoryDeduplicationStoreTests.cs": {
+    "mtime": 1785675323.4746032,
+    "seen": 1787487697.0982566,
+    "ast_hash": "d932fcc1790896f43a4ca05f9f48ce41",
+    "semantic_hash": "d932fcc1790896f43a4ca05f9f48ce41"
+  },
+  "tests/BunkerFlow.Integration.Tests/IngestionPipelineTests.cs": {
+    "mtime": 1785675365.6339166,
+    "seen": 1787487697.0982568,
+    "ast_hash": "5268412755fffe3d6b3ab15f9f847200",
+    "semantic_hash": "5268412755fffe3d6b3ab15f9f847200"
+  },
+  "tests/BunkerFlow.Integration.Tests/MockSourceDataTests.cs": {
+    "mtime": 1785676241.9214315,
+    "seen": 1787487697.0982573,
+    "ast_hash": "2e5ae1570dbe6faab28da9eba72a29bb",
+    "semantic_hash": "2e5ae1570dbe6faab28da9eba72a29bb"
+  },
+  "tests/BunkerFlow.Integration.Tests/ParquetLandingWriterTests.cs": {
+    "mtime": 1785697776.4251997,
+    "seen": 1787487697.098258,
+    "ast_hash": "3fb2077593da1db40f0e405bf4469748",
+    "semantic_hash": "3fb2077593da1db40f0e405bf4469748"
+  },
+  "tests/BunkerFlow.Integration.Tests/RetryPolicyTests.cs": {
+    "mtime": 1785675317.1631985,
+    "seen": 1787487697.0982583,
+    "ast_hash": "549a7b09e7ef120d9cb2dd9a77cd7781",
+    "semantic_hash": "549a7b09e7ef120d9cb2dd9a77cd7781"
+  },
+  "tests/BunkerFlow.Integration.Tests/TestSupport/RecordBuilder.cs": {
+    "mtime": 1785675265.938681,
+    "seen": 1787487697.09826,
+    "ast_hash": "8d299b1061a11d2650a11415f921cdce",
+    "semantic_hash": "8d299b1061a11d2650a11415f921cdce"
+  },
+  "tests/BunkerFlow.Integration.Tests/TestSupport/ScriptedEventPublisher.cs": {
+    "mtime": 1785675333.2680447,
+    "seen": 1787487697.0982604,
+    "ast_hash": "d3b8e6006eebd442bf54e62e82110820",
+    "semantic_hash": "d3b8e6006eebd442bf54e62e82110820"
+  },
+  "tests/BunkerFlow.Integration.Tests/TestSupport/TestClock.cs": {
+    "mtime": 1785675245.549625,
+    "seen": 1787487697.0982606,
+    "ast_hash": "6f435654aeb13e0a7ca80517fbc39c7d",
+    "semantic_hash": "6f435654aeb13e0a7ca80517fbc39c7d"
+  },
+  ".github/workflows/ci.yml": {
+    "mtime": 1785702411.7289789,
+    "seen": 1787487697.0982614,
+    "ast_hash": "2db3abb6b8fe62c1516aa0d33386f15f",
+    "semantic_hash": "2db3abb6b8fe62c1516aa0d33386f15f"
+  },
+  "PROJECT_BRAINSTORM.md": {
+    "mtime": 1785674883.521792,
+    "seen": 1787487697.0982618,
+    "ast_hash": "59df46e4d8fd81632771ba5e943382cb",
+    "semantic_hash": "59df46e4d8fd81632771ba5e943382cb"
+  },
+  "README.md": {
+    "mtime": 1785826820.628181,
+    "seen": 1787487697.0982623,
+    "ast_hash": "b8b3ed8b387712c98275bd911f19ae6f",
+    "semantic_hash": "b8b3ed8b387712c98275bd911f19ae6f"
+  },
+  "docker-compose.azure.yml": {
+    "mtime": 1785759111.1277633,
+    "seen": 1787487697.0982625,
+    "ast_hash": "4c546d5dc4004a751314057ace0845a8",
+    "semantic_hash": "4c546d5dc4004a751314057ace0845a8"
+  },
+  "docker-compose.yml": {
+    "mtime": 1785702234.0972674,
+    "seen": 1787487697.098263,
+    "ast_hash": "601bd10072c5b852512845677c3a0414",
+    "semantic_hash": "601bd10072c5b852512845677c3a0414"
+  },
+  "docs/azure-verification.md": {
+    "mtime": 1785826790.298292,
+    "seen": 1787487697.0982633,
+    "ast_hash": "c4d369e7d33cf2aa0db1e8e608cb46bc",
+    "semantic_hash": "c4d369e7d33cf2aa0db1e8e608cb46bc"
+  },
+  "docs/databricks-gold.png": {
+    "mtime": 1785753666.4525204,
+    "seen": 1787487697.0982637,
+    "ast_hash": "1d3d93700925940855f2279d6be452be",
+    "semantic_hash": "1d3d93700925940855f2279d6be452be"
+  }
+}
